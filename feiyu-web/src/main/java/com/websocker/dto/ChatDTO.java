@@ -1,6 +1,7 @@
 package com.websocker.dto;
 
 import com.alibaba.fastjson.JSON;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -27,12 +28,16 @@ public class ChatDTO extends WsBaseDTO implements Serializable {
     @ApiModelProperty("类型编号")
     private Integer typeCode;
 
+    @ApiModelProperty("聊天内容")
+    private String content;
+
     public static void main(String[] args) {
         ChatDTO dto = ChatDTO.builder()
                 .userClientId(1l)
                 .userId(1l)
                 .userToClientId(1l)
                 .userName("你好")
+                .content("请输入你的聊天内容")
                 .build();
 
         WsBaseDTO baseDTO = new WsBaseDTO();
