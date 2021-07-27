@@ -6,6 +6,7 @@ import com.user.entity.TUserFriendRelation;
 import com.user.service.ITUserFriendRelationService;
 import com.user.userdto.UserDTO;
 import com.user.userdto.UserStatusDTO;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -28,7 +29,9 @@ public class TUserFriendRelationController {
     @Autowired
     private ITUserFriendRelationService friendRelationService;
 
+
     @RequestMapping("/get_user_friends")
+    @ApiOperation(value = "拉取用户好友列表",tags = "")
     public UserDTO getFreiends(Long userId){
         List<TUserFriendRelation> relations = friendRelationService.getBaseMapper().selectList(Wrappers.<TUserFriendRelation>lambdaQuery()
                 .eq(TUserFriendRelation::getUserId, userId)
