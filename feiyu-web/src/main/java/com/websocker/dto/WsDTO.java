@@ -7,13 +7,25 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class WsDTO extends WsBaseDTO {
 
-  public static  ConcurrentHashMap<Long,ChannelHandlerContext> clientMap =  new ConcurrentHashMap<Long,ChannelHandlerContext>();
-  public static  ConcurrentHashMap<Long, SocketAddress> remoteAddress =  new ConcurrentHashMap<Long,SocketAddress>();
-  public static  ConcurrentHashMap<Long,ConcurrentHashMap<Long,ChannelHandlerContext>> userMap =  new ConcurrentHashMap<Long,ConcurrentHashMap<Long,ChannelHandlerContext>>();
+  public static  ConcurrentHashMap<String ,ChannelHandlerContext> clientMap =  new ConcurrentHashMap<String, ChannelHandlerContext>();
+  public static  ConcurrentHashMap<String, SocketAddress> remoteAddress =  new ConcurrentHashMap<String,SocketAddress>();
+  public static  ConcurrentHashMap<Long,ConcurrentHashMap<String,ChannelHandlerContext>> userMap =  new ConcurrentHashMap<Long,ConcurrentHashMap<String,ChannelHandlerContext>>();
 
   /**
    * 用户聊天登录
    */
   public static final String USER_CHAT_LOGIN = "chat_login";
+
+  /**
+   * 用户聊天
+   */
+  public static final String USER_CHAT_CONTENT = "chat_content";
+
+  /**
+   * 聊天的topic
+   */
+  public static final String CHAT = "chat";
+
+
 
 }

@@ -2,7 +2,6 @@ package com.user.userdto;
 
 import lombok.*;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
 @ToString

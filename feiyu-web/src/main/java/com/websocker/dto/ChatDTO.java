@@ -1,6 +1,7 @@
 package com.websocker.dto;
 
 import com.alibaba.fastjson.JSON;
+import com.chat.ChatType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -11,41 +12,51 @@ import java.io.Serializable;
 @Data
 @ToString
 @Builder
-public class ChatDTO extends WsBaseDTO implements Serializable {
+public class ChatDTO implements Serializable {
     private static final long serialVersionUID = -394605303957850L;
     @ApiModelProperty("用户id")
     private Long userId;
 
     @ApiModelProperty("用户id")
-    private Long userClientId;
+    private String userClientId;
 
     @ApiModelProperty("目标用户id")
-    private Long userToClientId;
+    private String userToClientId;
+
+    @ApiModelProperty("目标用户id")
+    private Long userToId;
 
     @ApiModelProperty("用户姓名")
     private String userName;
 
     @ApiModelProperty("类型编号")
-    private Integer typeCode;
+    private String typeCode;
 
     @ApiModelProperty("聊天内容")
     private String content;
 
+    @ApiModelProperty("聊天内容")
+    private String type;
+
+
     public static void main(String[] args) {
         ChatDTO dto = ChatDTO.builder()
-                .userClientId(1l)
+                //.userClientId("web1")
                 .userId(1l)
-                .userToClientId(1l)
-                .userName("你好")
+                .type(ChatType.USER_CONTENT)
+                //.userToClientId("2")
+                 .userToId(2l)
+                //.userName("你好")
                 .content("请输入你的聊天内容")
                 .build();
 
         WsBaseDTO baseDTO = new WsBaseDTO();
-        baseDTO.setTopic(WsDTO.USER_CHAT_LOGIN);
+        baseDTO.setTopic(WsDTO.CHAT);
         baseDTO.setMsgJson(JSON.toJSONString(dto));
 
 
 
         System.out.println(JSON.toJSONString(baseDTO));
+        System.out.println(JSON.toJSONString(dto));
     }
 }

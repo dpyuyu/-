@@ -1,15 +1,11 @@
 package com;
 
-import com.im.netty.EchoServer;
 import com.im.netty的webSocket.WebSocketServer;
-import com.thread.ThreadPools;
+import com.common.ThreadPools;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-
-import javax.annotation.PostConstruct;
 
 
 @SpringBootApplication
