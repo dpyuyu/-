@@ -27,5 +27,16 @@ public class WsDTO extends WsBaseDTO {
   public static final String CHAT = "chat";
 
 
+  /**
+   * 服务器登录。
+   */
+  public static final String SEVER_LOGIN = "sever_login";
+
+
+
+  /**
+   * 服务处理程序前缀 + ip 就是服务名称
+   */
+  public static final String SERVER_PREFIX = "feiyu-server-";
 
 }

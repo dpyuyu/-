@@ -1,7 +1,10 @@
-package com.im.netty的webSocket;
+package com.fieyu.netty.websocket;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -38,7 +41,7 @@ public class WebSocketServer {
                     });//绑定io事件处理类
             //绑定端口，等待同步成功
             Channel f = b.bind(nettyPort).sync().channel();
-            log.info("Web Socket server started at nettyPort"+nettyPort+"_");
+            log.info("Web Socket server started at nettyPort:"+nettyPort+"_");
             log.info("Open your browser and navigate to http://localhost:"+nettyPort+"/");
 
             //等待服务端监听端口关闭
@@ -54,19 +57,7 @@ public class WebSocketServer {
 
     }
 
-//    /**
-//     * 主要处理网络中的io事件
-//     * 例：记录日志，对消息进行编码解码操作
-//     * 当客户端端 链接到这里时  执行这里
-//     */
-//    public class ChildChannelHandler extends ChannelInitializer<SocketChannel> {
-//        @Override
-//        protected void initChannel(SocketChannel socketChannel) throws Exception {
-//            socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
-//            socketChannel.pipeline().addLast(new StringDecoder());
-//            socketChannel.pipeline().addLast(new TimeServerHandler());
-//        }
-//    }
+
 
     /**
      * @param args
@@ -81,7 +72,7 @@ public class WebSocketServer {
                 e.printStackTrace();
             }
         }
-        new WebSocketServer().start(7008);
+        new WebSocketServer().start(port);
     }
 
 

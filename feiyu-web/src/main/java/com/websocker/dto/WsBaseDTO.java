@@ -1,6 +1,6 @@
 package com.websocker.dto;
 
-import io.swagger.models.auth.In;
+
 import lombok.*;
 
 import java.io.Serializable;
@@ -18,4 +18,6 @@ public class WsBaseDTO implements Serializable {
     private String msgJson;
 
     private String topic;
+
+    private String serverName;
 }

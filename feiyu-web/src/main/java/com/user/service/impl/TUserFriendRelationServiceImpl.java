@@ -5,6 +5,7 @@ import com.user.mapper.TUserFriendRelationMapper;
 import com.user.service.ITUserFriendRelationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -15,6 +16,11 @@ import org.springframework.stereotype.Service;
  * @since 2021-07-27
  */
 @Service
+@Transactional
 public class TUserFriendRelationServiceImpl extends ServiceImpl<TUserFriendRelationMapper, TUserFriendRelation> implements ITUserFriendRelationService {
 
+    @Override
+    public void saveRelation(TUserFriendRelation relation) {
+        boolean save = this.save(relation);
+    }
 }

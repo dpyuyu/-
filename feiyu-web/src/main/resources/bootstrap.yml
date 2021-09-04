@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: feiyu-web
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 81.69.99.56:8848
+        namespace: 247759ed-5528-41e6-9bdf-3fd5c764c5d0
+      config:
+        server-addr: 81.69.99.56:8848
+        file-extension: yml
+        namespace: 247759ed-5528-41e6-9bdf-3fd5c764c5d0
+  profiles:
+    active: dev

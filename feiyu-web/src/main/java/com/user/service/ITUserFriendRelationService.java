@@ -13,4 +13,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ITUserFriendRelationService extends IService<TUserFriendRelation> {
 
+    /**
+     * 添加好友
+     * @param relation
+     */
+    void saveRelation(TUserFriendRelation relation);
 }

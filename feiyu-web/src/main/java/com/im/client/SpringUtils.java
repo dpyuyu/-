@@ -1,10 +1,8 @@
-package com.im.netty的webSocket;
+package com.im.client;
 
-import com.websocker.service.impl.WebSockerServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository

@@ -1,19 +1,24 @@
-package com.websocker.dto;
+package com.fieyu.netty.dto;
 
 import com.alibaba.fastjson.JSON;
-import com.chat.ChatType;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.List;
 
 @AllArgsConstructor
 @Data
 @ToString
 @Builder
-public class ChatDTO implements Serializable {
+public class UserDTO implements Serializable {
     private static final long serialVersionUID = -394605303957850L;
+
+
+
     @ApiModelProperty("用户id")
     private Long userId;
 
@@ -26,7 +31,7 @@ public class ChatDTO implements Serializable {
     @ApiModelProperty("目标用户id")
     private Long userToId;
 
-    @ApiModelProperty("用户姓名")
+    @ApiModelProperty("目标用户id")
     private String userName;
 
     @ApiModelProperty("类型编号")
@@ -35,26 +40,31 @@ public class ChatDTO implements Serializable {
     @ApiModelProperty("聊天内容")
     private String content;
 
-    @ApiModelProperty("聊天内容")
+    @ApiModelProperty("状态")
     private String type;
 
+    @ApiModelProperty("聊天内容")
+    private String topic;
+
+    @ApiModelProperty("需要发送的所有用户")
+    private List<String> userClientIds;
 
     public static void main(String[] args) {
-        ChatDTO dto = ChatDTO.builder()
-                //.userClientId("web1")
+        UserDTO dto = UserDTO.builder()
+                .userClientId("web1")
                 .userId(1l)
-                .type(ChatType.USER_CONTENT)
-                //.userToClientId("2")
-                 .userToId(2l)
-                //.userName("你好")
-                .content("请输入你的聊天内容")
+                .type(ConsumerType.LINK)
+              //  .userToClientId("2")
+               // .userToId(2l)
+                .userName("丽敏")
+            //    .content("请输入你的聊天内容")
+                .topic("chat")
                 .build();
 
-        WsBaseDTO baseDTO = new WsBaseDTO();
-        baseDTO.setTopic(WsDTO.CHAT);
+        BaseVO baseDTO = new BaseVO();
+        baseDTO.setTopic(WsDTO.USER_MSG);
         baseDTO.setMsgJson(JSON.toJSONString(dto));
-
-
+        baseDTO.setServerName("chat_server");
 
         System.out.println(JSON.toJSONString(baseDTO));
         System.out.println(JSON.toJSONString(dto));

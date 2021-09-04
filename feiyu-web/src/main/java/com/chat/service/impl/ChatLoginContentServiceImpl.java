@@ -6,62 +6,69 @@ import com.chat.service.IChatService;
 import com.common.ChatAnnotation;
 import com.common.ICommonSockerProcess;
 import com.common.WebSocketException;
-import com.fasterxml.jackson.core.io.CharTypes;
-import com.websocker.dto.ChatDTO;
-import com.websocker.dto.WsDTO;
+import com.websocker.dto.UserDTO;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import io.swagger.annotations.Tag;
-import javafx.scene.chart.Chart;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 @Service
-@ChatAnnotation(value ={ChatType.LOGIN})
+@ChatAnnotation(value ={ChatType.LINK})
 @Slf4j
 public class ChatLoginContentServiceImpl extends ICommonSockerProcess implements IChatService {
 
-    @Override
-    public void issue(ChannelHandlerContext ctx, ChatDTO chatDTO) throws WebSocketException {
+    @Autowired
+    private RedisTemplate redisTemplate;
 
-        switch (chatDTO.getType()){
+
+    @Override
+    public void issue(ChannelHandlerContext ctx, UserDTO chat) throws WebSocketException {
+
+        switch (chat.getType()){
             case ChatType.LINK:
-                link(ctx,chatDTO);
+                link(ctx,chat);
                 break;
             case ChatType.USER_CONTENT:
-                content(ctx,chatDTO);
+                content(ctx,chat);
+                break;
+            case ChatType.LINK_OUT:
+                linkOut(ctx,chat);
                 break;
         }
-
-
-
-
     }
 
-    private void content(ChannelHandlerContext ctx, ChatDTO chat) throws WebSocketException {
+    private void linkOut(ChannelHandlerContext ctx, UserDTO chat) {
+        //发送断线信息
+        sendContentUserToId(chat.getUserId(),chat.getUserId(),chat.getContent(),chat.getType());
+        //清除在线状态
+        saveLoginOut(chat.getUserId());
+        //关闭链接
+        ctx.close();
+    }
+
+
+    private void content(ChannelHandlerContext ctx, UserDTO chat) throws WebSocketException {
         if (chat == null) {
             log.info("error chatDTO  chatDTO{}", chat);
             throw new WebSocketException("聊天参数异常");
         }
-        sendContentUserToId(chat.getUserId(),chat.getUserToId(),chat.getContent());
+        sendContentUserToId(chat.getUserId(),chat.getUserToId(),chat.getContent(),chat.getType());
+
+      //  redisTemplate.opsForValue().setIfPresent("key","value",200, TimeUnit.HOURS); // 设置这个key 过期时间为 x
     }
 
-    private void link(ChannelHandlerContext ctx, ChatDTO chatDTO) {
-        LoginConflict(ctx, chatDTO.getUserId(), chatDTO.getUserClientId());
-        //存储一些信息
-        WsDTO.clientMap.put(chatDTO.getUserClientId(), ctx);  //存clientId 的地址
-        ConcurrentHashMap<String, ChannelHandlerContext> map = new ConcurrentHashMap<>();
-        map.put(chatDTO.getUserClientId(), ctx);
-        WsDTO.userMap.put(chatDTO.getUserId(), map);  //按照userid 存多个客户端地址
-        WsDTO.remoteAddress.put(chatDTO.getUserClientId(), ctx.channel().remoteAddress()); //按照clientId 存远程地址
-        ctx.write(new TextWebSocketFrame(JSON.toJSONString(ChatDTO.builder().content("登录成功").typeCode(ChatType.LINK).build())));
+
+    private void link(ChannelHandlerContext ctx, UserDTO userDTO) {
+        //保存用户在线信息
+        this.saveLogin(userDTO.getUserId());
+        log.info("user link success userDTO{}",userDTO);
     }
+
+
 
 
 }
