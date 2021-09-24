@@ -1,7 +1,6 @@
-package com.fieyu.netty.dto;
+package com.feiyu.netty.dto;
 
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.io.Serializable;

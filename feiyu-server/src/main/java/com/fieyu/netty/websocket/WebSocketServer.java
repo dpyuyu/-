@@ -11,6 +11,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.stream.ChunkedWriteHandler;
+import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +38,7 @@ public class WebSocketServer {
                             pipeline.addLast("aggergator",new HttpObjectAggregator(65536));//将HTTP消息的多个部分组成为u一个消息
                             pipeline.addLast("http-chunked",new ChunkedWriteHandler());//来向客户端发送HTML5文件 主要支持浏览器端和服务端进行通信
                             pipeline.addLast("handler",new WebSocketServerHandler());// 这个是自定义的WebSocket服务端
+                            pipeline.addLast("IdleCheckHandler",new IdleStateHandler(7200,75,9));// 这个是自定义的WebSocket服务端
                         }
                     });//绑定io事件处理类
             //绑定端口，等待同步成功

@@ -1,6 +1,7 @@
 package com.fieyu.task;
 
-import com.fieyu.netty.dto.WsDTO;
+
+import com.feiyu.netty.dto.WsDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;

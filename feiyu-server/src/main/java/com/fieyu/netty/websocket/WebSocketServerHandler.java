@@ -2,8 +2,8 @@ package com.fieyu.netty.websocket;
 
 
 import com.alibaba.fastjson.JSON;
-import com.fieyu.netty.dto.BaseVO;
-import com.fieyu.netty.dto.WsDTO;
+import com.feiyu.netty.dto.BaseVO;
+import com.feiyu.netty.dto.WsDTO;
 import com.fieyu.netty.process.impl.WebSocketProcessImpl;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -21,11 +21,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 
-import javax.xml.soap.Text;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
-import static com.fieyu.netty.dto.WsDTO.SERVER_PREFIX;
+import static com.feiyu.netty.dto.WsDTO.SERVER_PREFIX;
 import static io.netty.handler.codec.http.HttpHeaders.isKeepAlive;
 import static io.netty.handler.codec.http.HttpHeaders.setContentLength;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;

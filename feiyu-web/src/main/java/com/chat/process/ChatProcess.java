@@ -4,7 +4,7 @@ import com.chat.service.IChatService;
 import com.common.ChatAnnotation;
 import com.common.ICommonSockerProcess;
 import com.common.WebSocketException;
-import com.websocker.dto.UserDTO;
+import com.feiyu.netty.dto.UserMessage;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
@@ -45,12 +45,12 @@ public class ChatProcess extends ICommonSockerProcess  implements ApplicationCon
         this.applicationContext =applicationContext;
     }
 
-    public static void chat(ChannelHandlerContext ctx, UserDTO userDTO) throws WebSocketException {
-        if (userDTO == null) {
-            log.info("error chatDTO  chatDTO{}", userDTO);
+    public static void chat(ChannelHandlerContext ctx, UserMessage userMessage) throws WebSocketException {
+        if (userMessage == null) {
+            log.info("error chatDTO  chatDTO{}", userMessage);
             throw new WebSocketException("聊天参数异常");
         }
-        ChatProcess.map.get(userDTO.getType()).issue(ctx, userDTO);
+        ChatProcess.map.get(userMessage.getType()).issue(ctx, userMessage);
     }
 
 }

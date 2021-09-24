@@ -1,10 +1,10 @@
 package com.fieyu.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.fieyu.netty.dto.BaseVO;
-import com.fieyu.netty.dto.UserDTO;
-import com.fieyu.netty.dto.ConsumerType;
-import com.fieyu.netty.dto.WsDTO;
+import com.feiyu.netty.dto.BaseVO;
+import com.feiyu.netty.dto.ConsumerType;
+import com.feiyu.netty.dto.UserMessage;
+import com.feiyu.netty.dto.WsDTO;
 import com.fieyu.service.IConsumer;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,7 +12,6 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -22,7 +21,7 @@ public class ConsumerImpl implements IConsumer {
     @Override
     public void consumerMsg(ChannelHandlerContext ctx, BaseVO dto) {
         log.info("consumerMsg{}",dto);
-        UserDTO user = this.getUserDTO(dto);
+        UserMessage user = this.getUserDTO(dto);
         //todo 如果chat等于null 直接通过用户ctx返回操作失败 code0 不返回具体参数
         switch (user.getType()) {
             case ConsumerType.LINK:
@@ -41,7 +40,7 @@ public class ConsumerImpl implements IConsumer {
     }
 
     @Override
-    public void serverSideProcessing(UserDTO chat) {
+    public void serverSideProcessing(UserMessage chat) {
         //一个简单的负载均衡
 
         int size = WsDTO.serverCtx.size();
@@ -59,7 +58,7 @@ public class ConsumerImpl implements IConsumer {
         channel.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(chat)));
     }
 
-    private void linkOut(ChannelHandlerContext ctx, UserDTO chat) {
+    private void linkOut(ChannelHandlerContext ctx, UserMessage chat) {
         log.info("user linkOut chat{}", chat.getUserClientId());
         //清除 服务处理程序
         WsDTO.clientMap.remove(chat.getUserClientId());
@@ -71,7 +70,7 @@ public class ConsumerImpl implements IConsumer {
     }
 
 
-    private void link(ChannelHandlerContext ctx, UserDTO chat) {
+    private void link(ChannelHandlerContext ctx, UserMessage chat) {
         log.info("user link chat{}", chat.getUserClientId());
         //登录冲突 清除服务端用户缓存
         this.LoginConflict(ctx, chat.getUserId(), chat.getUserClientId());
@@ -87,8 +86,8 @@ public class ConsumerImpl implements IConsumer {
         log.info("user success chat{}", chat.getUserClientId());
     }
 
-    private UserDTO getUserDTO(BaseVO dto) {
-        return JSON.parseObject(dto.getMsgJson(), UserDTO.class);
+    private UserMessage getUserDTO(BaseVO dto) {
+        return JSON.parseObject(dto.getMsgJson(), UserMessage.class);
     }
 
     /**
@@ -105,7 +104,7 @@ public class ConsumerImpl implements IConsumer {
             if (longs != null && longs.contains(userClientId) && !WsDTO.clientRemoteAddress.get(userClientId).equals(ctxL.channel().remoteAddress())) {
                 log.info("LOGIN_CONFLICT userId{},userClientId{}", userId, userClientId);
                 ChannelHandlerContext ctx = WsDTO.clientMap.get(userClientId);
-                ctx.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(UserDTO.builder()
+                ctx.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(UserMessage.builder()
                         .content("登录冲突")
                         .typeCode(ConsumerType.LOGIN_CONFLICT)
                         .build())));

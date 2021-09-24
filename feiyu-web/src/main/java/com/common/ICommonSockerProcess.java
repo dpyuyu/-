@@ -1,14 +1,13 @@
 package com.common;
 
 import com.alibaba.fastjson.JSON;
-import com.websocker.dto.UserDTO;
+import com.feiyu.netty.dto.UserMessage;
+import com.feiyu.netty.dto.WsDTO;
 import com.websocker.dto.RedisKeys;
-import com.websocker.dto.WsDTO;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.Collection;
@@ -35,7 +34,7 @@ public  abstract class ICommonSockerProcess {
 
         for (ChannelHandlerContext value : values) {
             value.writeAndFlush(new TextWebSocketFrame(
-                    JSON.toJSONString(UserDTO.builder()
+                    JSON.toJSONString(UserMessage.builder()
                             .userId(userId)
                             .userToId(userToId)
                             .content(content)

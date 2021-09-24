@@ -1,7 +1,8 @@
 package com.fieyu.service;
 
-import com.fieyu.netty.dto.BaseVO;
-import com.fieyu.netty.dto.UserDTO;
+
+import com.feiyu.netty.dto.BaseVO;
+import com.feiyu.netty.dto.UserMessage;
 import io.netty.channel.ChannelHandlerContext;
 
 public interface IConsumer {
@@ -16,5 +17,5 @@ public interface IConsumer {
      * 服务端处理啊程序
      * @param chat
      */
-    void serverSideProcessing( UserDTO chat);
+    void serverSideProcessing( UserMessage chat);
 }

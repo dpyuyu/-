@@ -23,7 +23,7 @@ public class WebSocketClientHandler extends SimpleChannelInboundHandler<Object> 
         Channel ch = ctx.channel();
         FullHttpResponse response;
         //进行握手操作
-        if (msg instanceof TextWebSocketFrame) {
+        if (msg instanceof TextWebSocketFrame||msg instanceof PongWebSocketFrame||msg instanceof CloseWebSocketFrame) {
             //接收服务端的消息
             WebSocketFrame frame = (WebSocketFrame) msg;
             //文本信息
@@ -38,12 +38,12 @@ public class WebSocketClientHandler extends SimpleChannelInboundHandler<Object> 
             }
             //关闭消息
             if (frame instanceof CloseWebSocketFrame) {
+
                 System.out.println("receive close frame");
                 CloseWebSocketFrame closeWebSocketFrame = new CloseWebSocketFrame(new WebSocketCloseStatus(0, IPTools.getLocalIP()));
                 ctx.channel().writeAndFlush(closeWebSocketFrame);
                 ch.close();
             }
-
 
         } else if (!this.handshaker.isHandshakeComplete()) {
             try {

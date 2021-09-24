@@ -1,6 +1,7 @@
 package com.fieyu.service;
 
-import com.fieyu.netty.dto.BaseVO;
+
+import com.feiyu.netty.dto.BaseVO;
 import io.netty.channel.ChannelHandlerContext;
 
 public interface IServer {

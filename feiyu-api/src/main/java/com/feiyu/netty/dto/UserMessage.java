@@ -1,4 +1,4 @@
-package com.fieyu.netty.dto;
+package com.feiyu.netty.dto;
 
 import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,10 +14,8 @@ import java.util.List;
 @Data
 @ToString
 @Builder
-public class UserDTO implements Serializable {
+public class UserMessage implements Serializable {
     private static final long serialVersionUID = -394605303957850L;
-
-
 
     @ApiModelProperty("用户id")
     private Long userId;
@@ -50,7 +48,7 @@ public class UserDTO implements Serializable {
     private List<String> userClientIds;
 
     public static void main(String[] args) {
-        UserDTO dto = UserDTO.builder()
+        UserMessage dto = UserMessage.builder()
                 .userClientId("web1")
                 .userId(1l)
                 .type(ConsumerType.LINK)

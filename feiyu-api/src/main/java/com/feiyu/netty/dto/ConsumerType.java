@@ -1,4 +1,4 @@
-package com.fieyu.netty.dto;
+package com.feiyu.netty.dto;
 
 public class ConsumerType {
     //链接服务并登录

@@ -2,8 +2,8 @@ package com.im.client;
 
 import com.alibaba.fastjson.JSON;
 import com.common.utils.IPTools;
-import com.websocker.dto.WsBaseDTO;
-import com.websocker.dto.WsDTO;
+import com.feiyu.netty.dto.BaseVO;
+import com.feiyu.netty.dto.WsDTO;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -23,7 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
 
-import static com.websocker.dto.WsDTO.SERVER_PREFIX;
+import static com.feiyu.netty.dto.WsDTO.SERVER_PREFIX;
+
 
 /**
  * 基于websocket的netty客户端
@@ -84,7 +85,7 @@ public class ClientByNetty {
     }
 
     private static String getLinkMsg() {
-        WsBaseDTO baseDTO = new WsBaseDTO();
+        BaseVO baseDTO = new BaseVO();
         baseDTO.setTopic(WsDTO.SEVER_LOGIN);
         baseDTO.setServerName(SERVER_PREFIX+ IPTools.getLocalIP());
         return JSON.toJSONString(baseDTO);

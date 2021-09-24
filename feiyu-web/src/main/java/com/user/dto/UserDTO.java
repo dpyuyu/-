@@ -9,4 +9,7 @@ public class UserDTO {
     public static final String STATUS_D = "d";
     public static final String STATUS_1= "1";
 
+    public int getTopic() {
+        return 0;
+    }
 }
