@@ -15,9 +15,9 @@ import java.util.Collection;
 @Slf4j
 public class HealthExaminationTask {
 
-    @Scheduled(cron = "0/5 * * * * ?")
-    public void checkHealthServer(){
-        int linkNumebr = WsDTO.serverCtx.size();
-        log.info("checkHealthServer linkNumebr:{} address{}",linkNumebr,WsDTO.serverCtx);
-    }
+//    @Scheduled(cron = "0/5 * * * * ?")
+//    public void checkHealthServer(){
+//        int linkNumebr = WsDTO.serverCtx.size();
+//        log.info("checkHealthServer linkNumebr:{} address{}",linkNumebr,WsDTO.serverCtx);
+//    }
 }

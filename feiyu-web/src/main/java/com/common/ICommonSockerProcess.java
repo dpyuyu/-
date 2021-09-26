@@ -31,7 +31,6 @@ public  abstract class ICommonSockerProcess {
     protected static void sendContentUserToId(Long userId, Long userToId, String content, String type) {
         ConcurrentHashMap<String, ChannelHandlerContext> map = WsDTO.userMap.get(userToId);
         Collection<ChannelHandlerContext> values = map.values();
-
         for (ChannelHandlerContext value : values) {
             value.writeAndFlush(new TextWebSocketFrame(
                     JSON.toJSONString(UserMessage.builder()

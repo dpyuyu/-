@@ -1,12 +1,11 @@
 package com.fieyu.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.fieyu.netty.dto.BaseVO;
-import com.fieyu.netty.dto.UserDTO;
-import com.fieyu.netty.dto.ConsumerType;
-import com.fieyu.netty.dto.WsDTO;
+import com.feiyu.netty.dto.BaseVO;
+import com.feiyu.netty.dto.ConsumerType;
+import com.feiyu.netty.dto.UserMessage;
+import com.feiyu.netty.dto.WsDTO;
 import com.fieyu.service.IServer;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +33,7 @@ public class ServerImpl implements IServer {
 
     @Override
     public void serverMsg(BaseVO dto) {
-        UserDTO userDTO = JSON.parseObject(dto.getMsgJson(), UserDTO.class);
+        UserMessage userDTO = JSON.parseObject(dto.getMsgJson(), UserMessage.class);
         switch (userDTO.getType()){
             case ConsumerType.USER_ALL_ME_CONTENT:
                 //发送聊天信息-sendAll--有指定用户信息
@@ -51,7 +50,7 @@ public class ServerImpl implements IServer {
         }
     }
 
-    private void sendToAllMsg(UserDTO userDTO) {
+    private void sendToAllMsg(UserMessage userDTO) {
         List<String> userClientIds = userDTO.getUserClientIds();
         for (String userClientId : userClientIds) {
             log.info("sendToAllMsg{}", userDTO);
@@ -64,7 +63,7 @@ public class ServerImpl implements IServer {
 
     }
 
-    private void sendToMsg(UserDTO userDTO) {
+    private void sendToMsg(UserMessage userDTO) {
         log.info("sendToMsg{}", userDTO);
         ChannelHandlerContext context = WsDTO.clientMap.get(userDTO.getUserToClientId());
         if (context==null){
@@ -73,7 +72,7 @@ public class ServerImpl implements IServer {
         context.channel().writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(userDTO)));
     }
 
-    private void sendMeMsg(UserDTO userDTO) {
+    private void sendMeMsg(UserMessage userDTO) {
         log.info("sendMeMsg{}", userDTO);
         ChannelHandlerContext context = WsDTO.clientMap.get(userDTO.getUserClientId());
         if (context==null){
@@ -82,7 +81,7 @@ public class ServerImpl implements IServer {
         context.channel().writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(userDTO)));
     }
 
-    private void sendAllMeMsg(UserDTO userDTO) {
+    private void sendAllMeMsg(UserMessage userDTO) {
         log.info("sendAllMsg{}" , userDTO);
         Collection<ConcurrentHashMap<String, ChannelHandlerContext>> values = WsDTO.userMap.values();
         for (ConcurrentHashMap<String, ChannelHandlerContext> value : values) {

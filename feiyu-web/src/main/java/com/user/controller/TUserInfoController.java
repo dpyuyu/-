@@ -3,20 +3,19 @@ package com.user.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.user.dto.UserBaseDTO;
-import com.user.entity.TUserFriendRelation;
 import com.user.entity.TUserInfo;
-import com.user.service.ITUserFriendRelationService;
 import com.user.service.ITUserInfoService;
-import com.websocker.dto.WsBaseDTO;
 import io.lettuce.core.dynamic.annotation.Param;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**

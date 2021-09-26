@@ -15,8 +15,8 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 @EnableDiscoveryClient
 public class FeiyuWeb implements CommandLineRunner {
 
-   @Value("${netty.port}")
-   private  Integer nettyPort;
+//   @Value("${netty.port}")
+//   private  Integer nettyPort;
 
     public static void main(String[] args) throws Exception {
 
