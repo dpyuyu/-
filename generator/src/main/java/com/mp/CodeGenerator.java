@@ -17,7 +17,7 @@ import java.util.List;
 public class CodeGenerator {
 
 
-
+//就是一行测试数据
     public static void main(String[] args) {
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
